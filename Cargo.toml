@@ -1,8 +1,19 @@
 [package]
 name = "tbd-iac"
-version = "0.1.0"
+version = "0.0.1"
 edition = "2021"
 
 # See more keys and their definitions at https://doc.rust-lang.org/cargo/reference/manifest.html
+[lib]
+name = "tbdiac"
+path = "src/lib.rs"
+
+[[bin]]
+name = "tbd-iac"
+path = "src/main.rs"
 
 [dependencies]
+clap = { version = "4.5.4", features = ["cargo"] }
+serde = "1.0.197"
+toml = "0.8.12"
+mlua = { version = "0.9.6", features = ["lua54", "module"] }
