@@ -6,6 +6,11 @@ on:
   pull_request:
     branches: [main]
 
+permissions:
+  contents: write # Needed for semantic-release to push tags
+  issues: write # Needed for semantic-release to create GitHub releases
+  pull-requests: write # Needed for semantic-release to comment on PRs
+
 jobs:
   test:
     name: Test
@@ -49,19 +54,27 @@ jobs:
     runs-on: ubuntu-latest
     needs: [test]
     if: github.ref == 'refs/heads/main'
+    permissions:
+      contents: write
+      issues: write
+      pull-requests: write
 
     steps:
       - uses: actions/checkout@v4
         with:
           fetch-depth: 0
+          token: ${{ secrets.RELEASE_TOKEN }} # Use a custom token
 
       - name: Install Rust toolchain
         uses: dtolnay/rust-toolchain@stable
 
+      - name: Make scripts executable
+        run: chmod +x ./scripts/bump-version.sh
+
       - name: Semantic Release
         uses: cycjimmy/semantic-release-action@v4
         env:
-          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+          GITHUB_TOKEN: ${{ secrets.RELEASE_TOKEN }}
           CARGO_REGISTRY_TOKEN: ${{ secrets.CARGO_REGISTRY_TOKEN }}
         with:
           extra_plugins: |
