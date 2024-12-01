@@ -43,8 +43,7 @@ mypy = "^1.0"
         .context("Failed to create pyproject.toml")?;
 
     // Create example stack
-    let example_stack = format!(
-        r#"from tbdtools import (
+    let example_stack = r#"from tbdtools import (
     Stack,
     aws,
     Resource,
@@ -73,7 +72,7 @@ class MainStack(Stack):
 # Initialize stack
 stack = MainStack("main")
 "#
-    );
+    .to_string();
 
     fs::write(project_dir.join("stacks").join("main.py"), example_stack)
         .context("Failed to create example stack")?;
@@ -91,7 +90,7 @@ Infrastructure as Code project using TBD Tools.
 ├── stacks/          # Stack definitions
 ├── modules/         # Reusable infrastructure modules
 ├── providers/       # Custom provider configurations
-└── tests/           # Infrastructure tests
+└── tests/          # Infrastructure tests
 ```
 
 ## Getting Started
