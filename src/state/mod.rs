@@ -6,9 +6,9 @@ use tokio::sync::RwLock;
 
 #[derive(Debug, Serialize, Deserialize, Clone)]
 pub struct Resource {
-    pub(crate) id: String,
-    pub(crate) provider: String,
-    pub(crate) state: serde_json::Value,
+    pub id: String,
+    pub provider: String,
+    pub state: serde_json::Value,
 }
 
 impl Resource {
